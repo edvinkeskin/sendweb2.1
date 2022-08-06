@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #c8c8c8;
+  height: 10vh;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.App-body {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.Split {
+  padding-top: 10vh;
+  height: 90vh;
+  width: 50vw;
+  background-color: #efefef;
+}
+
+.Button {
+  height: 2.5vh;
+  width: 5vw;
+}
