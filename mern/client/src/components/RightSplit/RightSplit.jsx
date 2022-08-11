@@ -7,9 +7,17 @@ function getCode() {
 }
 
 export default function RightSplit(props) {
+    const [key, setKey] = useState(0);
+
+    // These methods will update the state properties.
+    function updateForm(value) {
+        return setKey((prev) => {
+            return { ...prev, ...value };
+        });
+    }
+
     // This method fetches the records from the database.
     async function read() {
-        const codeInput = document.getElementById('codeInput');
         const response = await fetch(`http://localhost:5000/record/`);
 
         if (!response.ok) {
@@ -19,14 +27,18 @@ export default function RightSplit(props) {
         }
 
         const records = await response.json();
-        alert(records)
+        alert(key)
+        for (let record of records) {
+            if(record.key === key)
+                alert(record.textInput)
+        }
     }
 
     return (
         <div className="Split">
             <text>code</text>
-            <input type="text" id="codeInput"/>
-            <button className="Button" onClick={read}>Enter</button>
+            <input type="text" onChange={(e) => setKey(e.target.value)} />
+            <button className="Button" onClick={read} >Enter </button>
         </div>
     );
 
