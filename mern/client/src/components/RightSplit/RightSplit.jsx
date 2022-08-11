@@ -8,14 +8,8 @@ function getCode() {
 
 export default function RightSplit(props) {
     const [key, setKey] = useState(0);
+    const [image, setImage] = useState();
     const [message, setMessage] = useState("");
-
-    // These methods will update the state properties.
-    function updateForm(value) {
-        return setKey((prev) => {
-            return { ...prev, ...value };
-        });
-    }
 
     // This method fetches the records from the database.
     async function read() {
@@ -29,7 +23,14 @@ export default function RightSplit(props) {
         const records = await response.json();
         for (let record of records) {
             if (record.key === key) {
-                setMessage(record.textInput)
+                // setMessage(record.textInput)
+                setImage(record.textInput)
+                const x = document.createElement("IMG");
+                x.setAttribute("src", "img_pulpit.jpg");
+                x.setAttribute("width", "304");
+                x.setAttribute("height", "228");
+                x.setAttribute("alt", "The Pulpit Rock");
+                document.body.appendChild(x);
             }
 
         }
@@ -40,7 +41,9 @@ export default function RightSplit(props) {
             <text>code</text>
             <input type="text" onChange={(e) => setKey(parseInt(e.target.value))} />
             <button className="Button" onClick={read} >Enter </button>
+
             <h1>{message}</h1>
+            <img id="foo" src={image}/>
         </div>
     );
 
