@@ -8,6 +8,7 @@ function getCode() {
 
 export default function RightSplit(props) {
     const [key, setKey] = useState(0);
+    const [message, setMessage] = useState("");
 
     // These methods will update the state properties.
     function updateForm(value) {
@@ -25,20 +26,21 @@ export default function RightSplit(props) {
             window.alert(message);
             return;
         }
-
         const records = await response.json();
-        alert(key)
         for (let record of records) {
-            if(record.key === key)
-                alert(record.textInput)
+            if (record.key === key) {
+                setMessage(record.textInput)
+            }
+
         }
     }
 
     return (
         <div className="Split">
             <text>code</text>
-            <input type="text" onChange={(e) => setKey(e.target.value)} />
+            <input type="text" onChange={(e) => setKey(parseInt(e.target.value))} />
             <button className="Button" onClick={read} >Enter </button>
+            <h1>{message}</h1>
         </div>
     );
 
