@@ -1,5 +1,6 @@
 import './RightSplit.css'
 import {useState} from "react";
+import Axios from "axios";
 
 function getCode() {
     const codeInput = document.getElementById('codeInput');
@@ -13,6 +14,7 @@ export default function RightSplit(props) {
 
     // This method fetches the records from the database.
     async function read() {
+        /*
         const response = await fetch(`http://localhost:5000/record/`);
 
         if (!response.ok) {
@@ -20,20 +22,20 @@ export default function RightSplit(props) {
             window.alert(message);
             return;
         }
-        const records = await response.json();
-        for (let record of records) {
-            if (record.key === key) {
-                // setMessage(record.textInput)
-                setImage(record.textInput)
-                const x = document.createElement("IMG");
-                x.setAttribute("src", "img_pulpit.jpg");
-                x.setAttribute("width", "304");
-                x.setAttribute("height", "228");
-                x.setAttribute("alt", "The Pulpit Rock");
-                document.body.appendChild(x);
-            }
 
-        }
+         */
+        const url = `http://localhost:5000/record/`;
+        Axios.get(url).then((response)=>{
+            for (let record of response.data) {
+                if (record.key === key) {
+                    const blob = new Blob([Int8Array.from(record.textInput)], {type: record.textInput.contentType });
+
+                    const image = window.URL.createObjectURL(blob);
+                    alert(image)
+                }
+
+            }
+        }).catch(err=>console.log(err));
     }
 
     return (

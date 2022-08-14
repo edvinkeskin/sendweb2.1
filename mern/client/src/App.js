@@ -2,6 +2,8 @@ import './App.css';
 import LeftSplit from "./components/LeftSplit/LeftSplit";
 import RightSplit from "./components/RightSplit/RightSplit";
 
+
+
 function App() {
   return (
       <div className="App">
@@ -18,3 +20,5 @@ function App() {
 }
 
 export default App;
+
+
