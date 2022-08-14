@@ -3,7 +3,6 @@ import LeftSplit from "./components/LeftSplit/LeftSplit";
 import RightSplit from "./components/RightSplit/RightSplit";
 
 
-
 function App() {
   return (
       <div className="App">
