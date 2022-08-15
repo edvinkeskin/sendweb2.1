@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require('body-parser');
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -34,35 +33,21 @@ recordRoutes.route("/record/:id").get(function (req, res) {
             res.json(result);
         });
 });
-/*
+
 // This section will help you create a new record.
 recordRoutes.route("/record/add").post(function (req, response) {
     let db_connect = dbo.getDb();
     let myobj = {
         key: req.body.key,
-        textInput: req.body.textInput,
+        input: req.body.input,
+        inputType: req.body.inputType
     };
     db_connect.collection("records").insertOne(myobj, function (err, res) {
         if (err) throw err;
         response.json(res);
     });
 });
- */
 
-const urlencodedParser = bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5000000 });
-
-// This section will help you create a new record.
-recordRoutes.post("/record/add", urlencodedParser, function (req, response) {
-    let db_connect = dbo.getDb();
-    let myobj = {
-        key: req.body.key,
-        textInput: req.body.textInput,
-    };
-    db_connect.collection("records").insertOne(myobj, function (err, res) {
-        if (err) throw err;
-        response.json(res);
-    });
-});
 
 // This section will help you update a record by id.
 recordRoutes.route("/update/:id").post(function (req, response) {
@@ -71,7 +56,8 @@ recordRoutes.route("/update/:id").post(function (req, response) {
     let newvalues = {
         $set: {
             key: req.body.key,
-            textInput: req.body.textInput,
+            input: req.body.input,
+            inputType: req.body.inputType
         },
     };
     db_connect

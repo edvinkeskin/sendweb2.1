@@ -2,6 +2,20 @@ import './RightSplit.css'
 import {useState} from "react";
 import Axios from "axios";
 
+
+function downloadPDF(pdf) {
+    const linkSource = `data:application/pdf;base64,${pdf}`;
+    const downloadLink = document.createElement("a");
+    const fileName = "abc.pdf";
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();}
+// <a download=pdfTitle href=pdfData title='Download pdf document' />
+// <embed src={`data:application/pdf;base64,${base64STR}`} />
+
+// type: "image/jpeg"    type: "image/png"
+// type: "application/pdf"   type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"    type: "application/x-zip-compressed"
+// type: "text/html"
 export default function RightSplit(props) {
     const [key, setKey] = useState(0);
     const [image, setImage] = useState();
@@ -13,15 +27,14 @@ export default function RightSplit(props) {
         Axios.get(url).then((response)=>{
             for (let record of response.data) {
                 if (record.key === key) {
-                    // const blob = new Blob([Int8Array.from(record.textInput)], {type: record.textInput.contentType });
-                    // const image = window.URL.createObjectURL(blob);
-                    console.log(record.textInput.indexOf(',')+1)
+                    if (record.inputType === "string") {
+                        setMessage(record.input)
+                    } else if (record.inputType.startsWith("application")) {
 
-                    const data = record.textInput.substring(record.textInput.indexOf(',')+1)
-                    setImage(data)
-                    // const Example = ({ data }) => <img src={`data:image/jpeg;base64,${data}`} />
-
-                    // ReactDOM.render(<Example data={data} />, document.getElementById('container'))
+                    } else if (record.inputType.startsWith("image")) {
+                        const data = record.input.substring(record.input.indexOf(',')+1)
+                        setImage(data)
+                    }
                 }
 
             }
@@ -35,7 +48,7 @@ export default function RightSplit(props) {
             <button className="Button" onClick={read} >Enter </button>
 
             <h1>{message}</h1>
-            <img id="foo" src={`data:image/jpeg;base64,${image}`}/>
+            {image ? <img src={`data:image/jpeg;base64,${image}`}/> : ""}
         </div>
     );
 
