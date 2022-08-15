@@ -1,19 +1,12 @@
 const express = require("express");
-const app = express()
-const bodyParser = require('body-parser')
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
-
+const bodyParser = require('body-parser');
 
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const recordRoutes = express.Router();
-
 // This will help us connect to the database
 const dbo = require("../db/conn");
-
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
@@ -41,9 +34,25 @@ recordRoutes.route("/record/:id").get(function (req, res) {
             res.json(result);
         });
 });
-
+/*
 // This section will help you create a new record.
 recordRoutes.route("/record/add").post(function (req, response) {
+    let db_connect = dbo.getDb();
+    let myobj = {
+        key: req.body.key,
+        textInput: req.body.textInput,
+    };
+    db_connect.collection("records").insertOne(myobj, function (err, res) {
+        if (err) throw err;
+        response.json(res);
+    });
+});
+ */
+
+const urlencodedParser = bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5000000 });
+
+// This section will help you create a new record.
+recordRoutes.post("/record/add", urlencodedParser, function (req, response) {
     let db_connect = dbo.getDb();
     let myobj = {
         key: req.body.key,
