@@ -2,7 +2,7 @@ import './LeftSplit.css'
 import {useState} from "react";
 import FileBase64 from 'react-file-base64';
 
-export default function LeftSplit(props) {
+export default function LeftSplit() {
     const [key, setKey] = useState();
     const [text, setText] = useState();
     const [file, setFile] = useState();
@@ -20,8 +20,8 @@ export default function LeftSplit(props) {
     // create
     // When a post request is sent to the create url, we'll add a new record to the database.
     async function create() {
-        const key = 112 + Math.floor(Math.random() * 999887)
-        setKey(key.toString())
+        const key = (112 + Math.floor(Math.random() * 999887)).toString()
+        setKey(key)
         const newNote = {key: key , input: text, inputType: "string"};
         await fetch("http://localhost:5000/record/add", {
             method: "POST",
@@ -38,8 +38,8 @@ export default function LeftSplit(props) {
     // create
     // When a post request is sent to the create url, we'll add a new record to the database.
     async function createFile() {
-        const key = 112 + Math.floor(Math.random() * 999887)
-        setKey(key.toString())
+        const key = (112 + Math.floor(Math.random() * 999887)).toString()
+        setKey(key)
         const newNote = {key: key , input: file.base64, inputType: file.type};
         console.log(JSON.stringify(newNote))
 

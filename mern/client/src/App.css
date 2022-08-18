@@ -4,7 +4,7 @@
 
 .App-header {
   background-color: #c8c8c8;
-  height: 10vh;
+  height: 7vh;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -18,8 +18,8 @@
 
 
 .Split {
-  padding-top: 10vh;
-  height: 90vh;
+  padding-top: 5vh;
+  height: 88vh;
   width: 50vw;
   background-color: #efefef;
 }

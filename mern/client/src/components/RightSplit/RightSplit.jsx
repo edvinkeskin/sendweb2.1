@@ -3,7 +3,7 @@ import {useState} from "react";
 import Axios from "axios";
 // import cat from '../../cat.jpg'
 
-export default function RightSplit(props) {
+export default function RightSplit() {
     const [key, setKey] = useState(0);
     const [image, setImage] = useState();
     const [file, setFile] = useState();
@@ -43,7 +43,7 @@ export default function RightSplit(props) {
 
             <h1>{message}</h1>
             {image ? <img src={image} alt=""/> : ""}
-            {file ? <embed style={{height: "85vh", width: "50vw"}} src={file} /> : ""}
+            {file ? <embed style={{height: "80vh", width: "50vw"}} src={file} /> : ""}
             {download ? <a download="pdfTitle" href={download} title='Download pdf document'>
                 <h2>Download File</h2>
                 </a>: ""}
