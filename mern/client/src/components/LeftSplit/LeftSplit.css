@@ -1,0 +1,10 @@
+.timerfalse {
+    height: 2.5vh;
+    width: 5vw;
+}
+
+.timertrue {
+    height: 2.5vh;
+    width: 5vw;
+    background-color: aqua;
+}

@@ -35,12 +35,15 @@ recordRoutes.route("/record/:id").get(function (req, res) {
 });
 
 // This section will help you create a new record.
-recordRoutes.route("/record/add").post(function (req, response) {
+recordRoutes.route("/record/add/:time").post(function (req, response) {
     let db_connect = dbo.getDb();
+    const date = Date.now()
+    const time = req.params.time
     let myobj = {
         key: req.body.key,
         input: req.body.input,
-        inputType: req.body.inputType
+        inputType: req.body.inputType,
+        ["createdOn" + time]: new Date(date)
     };
     db_connect.collection("drops").insertOne(myobj, function (err, res) {
         if (err) throw err;
@@ -73,6 +76,19 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 recordRoutes.route("/:id").delete((req, response) => {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("drops").deleteOne(myquery, function (err, obj) {
+        if (err) throw err;
+        console.log("1 document deleted");
+        response.json(obj);
+    });
+});
+
+
+// This section will help you delete a record
+recordRoutes.route("/delete/:key").delete((req, response) => {
+    let db_connect = dbo.getDb();
+    console.log(req.params)
+    let myquery = { key: req.params.key };
     db_connect.collection("drops").deleteOne(myquery, function (err, obj) {
         if (err) throw err;
         console.log("1 document deleted");

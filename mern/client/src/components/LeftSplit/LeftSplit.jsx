@@ -6,6 +6,10 @@ export default function LeftSplit() {
     const [key, setKey] = useState();
     const [text, setText] = useState();
     const [file, setFile] = useState();
+    const [timer, setTimer] = useState(5)
+    // const [isSelected5, setIsSelected5] = useState(false)
+    // const [isSelected60, setIsSelected60] = useState(false)
+    // const [isSelected1440, setIsSelected1440] = useState(false)
 
     function getFiles(files){
         console.log(files)
@@ -23,7 +27,7 @@ export default function LeftSplit() {
         const key = (112 + Math.floor(Math.random() * 999887)).toString()
         setKey(key)
         const newNote = {key: key , input: text, inputType: "string"};
-        await fetch("http://localhost:5000/record/add", {
+        await fetch(`http://localhost:5000/record/add/${timer}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +47,7 @@ export default function LeftSplit() {
         const newNote = {key: key , input: file.base64, inputType: file.type};
         console.log(JSON.stringify(newNote))
 
-        await fetch("http://localhost:5000/record/add", {
+        await fetch(`http://localhost:5000/record/add/${timer}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -53,8 +57,6 @@ export default function LeftSplit() {
             .catch(error => {
                 window.alert(error);
             });
-
-
     }
 
     return (
@@ -64,6 +66,12 @@ export default function LeftSplit() {
             <FileBase64 onDone={  getFiles.bind(this) } />
             <button className="Button" onClick={create}>Enter</button>
             <button className="Button" onClick={createFile}>Enter File</button>
+            <div>
+                <button className={`timer${timer===5}`} onClick={() => setTimer(5)}>5 minutes</button>
+                <button className={`timer${timer===60}`} onClick={() => setTimer(60)}>1 hour</button>
+                <button className={`timer${timer===1440}`} onClick={() => setTimer(1440)}>24 hours</button>
+                <button className={`timer${timer===0}`} onClick={() => setTimer(0)}>No Scheduled Delete</button>
+            </div>
             <h1>{key}</h1>
         </div>
     );
