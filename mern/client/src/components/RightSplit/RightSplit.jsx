@@ -4,7 +4,7 @@ import Axios from "axios";
 // import cat from '../../cat.jpg'
 
 export default function RightSplit() {
-    const [key, setKey] = useState(0);
+    const [key, setKey] = useState();
     const [image, setImage] = useState();
     const [file, setFile] = useState();
     const [download, setDownload] = useState();
@@ -16,6 +16,10 @@ export default function RightSplit() {
         Axios.get(url).then((response)=>{
             for (let record of response.data) {
                 if (record.key === key) {
+                    setDownload(null)
+                    setImage(null)
+                    setFile(null)
+                    setMessage(null)
                     if (record.inputType === "string") {
                         setMessage(record.input)
                     } else if (record.inputType === "application/pdf") {
@@ -38,11 +42,11 @@ export default function RightSplit() {
     return (
         <div className="Split">
             <text>code</text>
-            <input type="text" onChange={(e) => setKey(parseInt(e.target.value))} />
+            <input type="text" onChange={(e) => setKey(e.target.value)} />
             <button className="Button" onClick={read} >Enter </button>
 
             <h1>{message}</h1>
-            {image ? <img src={image} alt=""/> : ""}
+            {image ? <img src={image} style={{maxHeight: "80vh", maxWidth: "40vw"}} alt="receivedImage"/> : ""}
             {file ? <embed style={{height: "80vh", width: "50vw"}} src={file} /> : ""}
             {download ? <a download="pdfTitle" href={download} title='Download pdf document'>
                 <h2>Download File</h2>

@@ -12,9 +12,9 @@ const ObjectId = require("mongodb").ObjectId;
 
 // This section will help you get a list of all the records.
 recordRoutes.route("/record").get(function (req, res) {
-    let db_connect = dbo.getDb("employees");
+    let db_connect = dbo.getDb("db");
     db_connect
-        .collection("records")
+        .collection("drops")
         .find({})
         .toArray(function (err, result) {
             if (err) throw err;
@@ -27,7 +27,7 @@ recordRoutes.route("/record/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect
-        .collection("records")
+        .collection("drops")
         .findOne(myquery, function (err, result) {
             if (err) throw err;
             res.json(result);
@@ -42,7 +42,7 @@ recordRoutes.route("/record/add").post(function (req, response) {
         input: req.body.input,
         inputType: req.body.inputType
     };
-    db_connect.collection("records").insertOne(myobj, function (err, res) {
+    db_connect.collection("drops").insertOne(myobj, function (err, res) {
         if (err) throw err;
         response.json(res);
     });
@@ -61,7 +61,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
         },
     };
     db_connect
-        .collection("records")
+        .collection("drops")
         .updateOne(myquery, newvalues, function (err, res) {
             if (err) throw err;
             console.log("1 document updated");
@@ -73,7 +73,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 recordRoutes.route("/:id").delete((req, response) => {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
-    db_connect.collection("records").deleteOne(myquery, function (err, obj) {
+    db_connect.collection("drops").deleteOne(myquery, function (err, obj) {
         if (err) throw err;
         console.log("1 document deleted");
         response.json(obj);
