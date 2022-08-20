@@ -1,6 +1,4 @@
 const express = require("express");
-// const cron = require('node-cron')
-const cleanDbTask = require('./tasks/cleanDbTask')
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
@@ -24,6 +22,4 @@ app.listen(port, () => {
     });
     console.log(`Server is running on port: ${port}`);
 });
-
-// cron.schedule('*/50 * * * *', cleanDbTask)
 
