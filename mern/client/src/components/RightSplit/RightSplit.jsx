@@ -4,7 +4,8 @@ import Axios from "axios";
 // import cat from '../../cat.jpg'
 
 export default function RightSplit() {
-    const [key, setKey] = useState();
+    const [key, setKey] = useState("");
+    const [password, setPassword] = useState("");
     const [image, setImage] = useState();
     const [file, setFile] = useState();
     const [download, setDownload] = useState();
@@ -12,10 +13,16 @@ export default function RightSplit() {
 
     // This method fetches the records from the database.
     async function read() {
+        setMessage("")
+        setDownload(null)
+        setFile(null)
         const url = `http://localhost:5000/record/`;
         Axios.get(url).then((response)=>{
             for (let record of response.data) {
                 if (record.key === key) {
+                    if(record.password && record.password !== password) {
+                        return
+                    }
                     setDownload(null)
                     setImage(null)
                     setFile(null)
@@ -43,6 +50,8 @@ export default function RightSplit() {
         <div className="Split">
             <text>code</text>
             <input type="text" onChange={(e) => setKey(e.target.value)} />
+            <text>password</text>
+            <input type="password" onChange={(e) => setPassword(e.target.value)} />
             <button className="Button" onClick={read} >Enter </button>
 
             <h1>{message}</h1>

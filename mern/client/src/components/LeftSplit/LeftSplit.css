@@ -12,3 +12,7 @@
 .textInputtrue {
     border-color: red;
 }
+
+.textInputfalse {
+    border-color: black;
+}
