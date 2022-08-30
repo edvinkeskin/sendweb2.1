@@ -3,12 +3,8 @@
 }
 
 .App-header {
-  background-color: #c8c8c8;
   height: 7vh;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
+  background-color: #c8c8c8;
 }
 
 .App-body {

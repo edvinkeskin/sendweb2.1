@@ -7,6 +7,7 @@ export default function RightSplit() {
     const [key, setKey] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState();
+    const [error, setError] = useState(false);
     const [file, setFile] = useState();
     const [download, setDownload] = useState();
     const [message, setMessage] = useState("");
@@ -21,8 +22,10 @@ export default function RightSplit() {
             for (let record of response.data) {
                 if (record.key === key) {
                     if(record.password && record.password !== password) {
+                        setError(true)
                         return
                     }
+                    setError(false)
                     setDownload(null)
                     setImage(null)
                     setFile(null)
@@ -40,6 +43,8 @@ export default function RightSplit() {
                     } else {
                         setDownload(record.input)
                     }
+                } else {
+                    setError(true)
                 }
 
             }
@@ -61,7 +66,7 @@ export default function RightSplit() {
                 <h2>Download File</h2>
                 </a>: ""}
 
-
+            {error ? <h2>Invalid key or password</h2> : ""}
 
         </div>
     );

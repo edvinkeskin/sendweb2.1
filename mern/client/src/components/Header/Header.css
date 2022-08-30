@@ -1,0 +1,17 @@
+.Header {
+    display: flex;
+    flex-direction: row-reverse;
+    height: 7vh;
+    color: black;
+}
+
+.ButtonSet {
+    display: flex;
+    flex-direction: row;
+}
+
+.HeaderButton {
+    height: 7vh;
+    width: 10vw;
+    font-size: calc(7px + 2vmin);
+}
