@@ -93,32 +93,45 @@ export default function LeftSplit() {
     }
 
     return (
-        <div className="Split">
-            <label>String Drop:</label>
-            <input type="text" className={`textInput${errorText}`} onChange={(e) => updateText(e.target.value)}/>
-            <label>File Drop:</label>
-            <FileBase64 onDone={getFiles.bind(this)}/>
-            <button className="Button" onClick={create}>Enter</button>
-            <button className="Button" onClick={createFile}>Enter File</button>
-            <input type="checkbox" id="password" onChange={() => {
-                setPasswordCheckbox(document.getElementById("password").checked)
-                setPassword(null)
-            }}/>
-            <label>Add Password</label>
-
+        <div className="split">
+            <div className='leftSplitDiv'>
+                <label>Send Text: &nbsp; </label>
+                <input type="text" className={`textInput${errorText}`} onChange={(e) => updateText(e.target.value)}/>
+                <button className="leftSplitButton" onClick={create}>Enter</button>
+            </div>
+            {errorText ? <text>No text input to send</text> : ""}
+            <br/>
+            <div className='leftSplitDiv'>
+                <label>Send File: &nbsp;&nbsp; </label>
+                <FileBase64 onDone={getFiles.bind(this)}/>
+                <button className="leftSplitButton" onClick={createFile}>Enter File</button>
+            </div>
+            {errorFile ? <text>File not inserted</text> : ""}
+            <br/>
+            <div className='leftSplitDiv'>
+                <label>Add Password: &nbsp;</label>
+                <input type="checkbox" className='checkboxInput' id="password" onChange={() => {
+                    setPasswordCheckbox(document.getElementById("password").checked)
+                    setPassword(null)
+                    setErrorPassword(false)
+                }}/>
+            </div>
             <div>
+                {passwordCheckbox ? <br/> : ""}
+                {passwordCheckbox ? <label>Password:  </label> : ""}
+                {passwordCheckbox ? <input type="text" className='textInputfalse' onChange={(e) => updatePassword(e.target.value)}/> : ""}
+                {errorPassword ? <br/> : ""}
+                {errorPassword ? <text>Password not set</text> : ""}
+            </div>
+            <br/>
+            <div className='timerButtons'>
                 <button className={`timer${timer === 5}`} onClick={() => setTimer(5)}>5 minutes</button>
                 <button className={`timer${timer === 60}`} onClick={() => setTimer(60)}>1 hour</button>
                 <button className={`timer${timer === 1440}`} onClick={() => setTimer(1440)}>24 hours</button>
-                <button className={`timer${timer === 0}`} onClick={() => setTimer(0)}>No Scheduled Delete</button>
+                <button className={`timer${timer === 0}`} onClick={() => setTimer(0)}>No Expiration</button>
             </div>
 
-            {passwordCheckbox ? <label>Password:</label> : ""}
-            {passwordCheckbox ? <input type="text" onChange={(e) => updatePassword(e.target.value)}/> : ""}
-            <h1>{key}</h1>
-            {errorText ? <h2>No text input to send</h2> : ""}
-            {errorPassword ? <h2>Password not set</h2> : ""}
-            {errorFile ? <h2>File not inserted</h2> : ""}
+            <h2>{key ? `Access Key: ${key}` : ''}</h2>
         </div>
     );
 

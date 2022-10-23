@@ -4,7 +4,7 @@
 
 .App-header {
   height: 7vh;
-  background-color: #c8c8c8;
+  background-color: #3498DB;
 }
 
 .App-body {
@@ -13,14 +13,33 @@
 }
 
 
-.Split {
+.split {
   padding-top: 5vh;
+  padding-left: 2vw;
   height: 88vh;
   width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   background-color: #efefef;
 }
 
-.Button {
-  height: 2.5vh;
+label {
+  font-size: 2.5vh;
+}
+
+input {
+  font-size: 2vh;
+}
+
+.checkboxInput {
+  width: 2vh;
+  height: 2vh;
+}
+
+button {
+  height: 3vh;
+  min-width: fit-content;
+  font-size: 2vh;
   width: 5vw;
 }

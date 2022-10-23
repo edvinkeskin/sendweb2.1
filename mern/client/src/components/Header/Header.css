@@ -1,11 +1,16 @@
 .Header {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     height: 7vh;
-    color: black;
+}
+
+.Title {
+    display: flex;
+    flex-direction: row;
 }
 
 .ButtonSet {
+    margin-left: auto;
     display: flex;
     flex-direction: row;
 }
@@ -13,5 +18,5 @@
 .HeaderButton {
     height: 7vh;
     width: 10vw;
-    font-size: calc(7px + 2vmin);
+    font-size: 3vh;
 }

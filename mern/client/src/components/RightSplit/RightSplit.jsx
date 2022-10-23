@@ -1,7 +1,6 @@
 import './RightSplit.css'
 import {useState} from "react";
 import Axios from "axios";
-// import cat from '../../cat.jpg'
 
 export default function RightSplit() {
     const [key, setKey] = useState("");
@@ -52,16 +51,21 @@ export default function RightSplit() {
     }
 
     return (
-        <div className="Split">
-            <text>code</text>
-            <input type="text" onChange={(e) => setKey(e.target.value)} />
-            <text>password</text>
-            <input type="password" onChange={(e) => setPassword(e.target.value)} />
-            <button className="Button" onClick={read} >Enter </button>
+        <div className="split">
+            <div>
+                <label>Code: &nbsp;</label>
+                <input type="text" onChange={(e) => setKey(e.target.value)} />
+                <button className="button" style={{marginLeft: '2vw'}} onClick={read} >Enter </button>
+            </div>
+            <br/>
+            <div>
+                <label>Password: &nbsp;</label>
+                <input type="password" onChange={(e) => setPassword(e.target.value)} />
+            </div>
 
             <h1>{message}</h1>
-            {image ? <img src={image} style={{maxHeight: "80vh", maxWidth: "40vw"}} alt="receivedImage"/> : ""}
-            {file ? <embed style={{height: "80vh", width: "50vw"}} src={file} /> : ""}
+            {image ? <img src={image} className='image' alt="receivedImage"/> : ""}
+            {file ? <embed className='file' src={file} /> : ""}
             {download ? <a download="pdfTitle" href={download} title='Download pdf document'>
                 <h2>Download File</h2>
                 </a>: ""}

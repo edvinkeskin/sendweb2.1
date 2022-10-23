@@ -8,6 +8,12 @@ In the project directory, you can run:
 
 ### `npm start`
 
+necesarry installs:
+
+for client react, react-script, react-google-login --force, react-router-dom, react-file-base64, axios
+for server dotenv, cors, express, mongodb
+
+
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
