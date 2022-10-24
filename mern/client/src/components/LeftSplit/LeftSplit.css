@@ -14,10 +14,12 @@ text {
 
 .textInputtrue {
     border-color: red;
+    background-color: #efefef;
 }
 
 .textInputfalse {
     border-color: black;
+    background-color: white;
 }
 
 .leftSplitButton {
@@ -29,6 +31,11 @@ text {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+}
+
+.checkboxInput {
+    width: 2vh;
+    height: 2vh;
 }
 
 .timerButtons {

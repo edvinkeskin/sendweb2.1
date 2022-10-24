@@ -1,4 +1,62 @@
-.gSignin{
-    width: 10vw;
-    height: 5vh;
+.acuteSender {
+    height: 7vh;
+}
+
+.acuteLogo {
+    height: 7vh
+}
+
+.login-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-body-header {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+    font-size: 3vh;
+}
+
+.login-body-body {
+    display: flex;
+    width: 22vw;
+    flex-direction: column;
+    align-items: start;
+}
+
+.passwordExtras {
+    margin-top: 1vh;
+    width: 22vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-textInputfalse {
+    padding: 0.7vw;
+    border-color: black;
+    background-color: white;
+    width: 20vw;
+    font-size: 2.5vh;
+}
+
+.login-textInputtrue {
+    border-color: red;
+    background-color: white;
+    width: 20vw;
+}
+
+.loginButton {
+
+}
+
+.login-checkboxInput {
+    width: 3vh;
+    height: 3vh;
+}
+
+.fPasswordButton {
+    margin-top: 0.4vh;
+    margin-left: auto;
 }

@@ -54,13 +54,13 @@ export default function RightSplit() {
         <div className="split">
             <div>
                 <label>Code: &nbsp;</label>
-                <input type="text" onChange={(e) => setKey(e.target.value)} />
+                <input type="text" className='textInputfalse' onChange={(e) => setKey(e.target.value)} />
                 <button className="button" style={{marginLeft: '2vw'}} onClick={read} >Enter </button>
             </div>
             <br/>
             <div>
                 <label>Password: &nbsp;</label>
-                <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" className='textInputfalse' onChange={(e) => setPassword(e.target.value)} />
             </div>
 
             <h1>{message}</h1>

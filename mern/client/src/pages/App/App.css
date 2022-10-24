@@ -32,14 +32,15 @@ input {
   font-size: 2vh;
 }
 
-.checkboxInput {
-  width: 2vh;
-  height: 2vh;
-}
-
 button {
   height: 3vh;
   min-width: fit-content;
   font-size: 2vh;
   width: 5vw;
+}
+
+.centerVertically {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
