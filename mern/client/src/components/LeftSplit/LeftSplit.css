@@ -36,6 +36,7 @@ text {
 .checkboxInput {
     width: 2vh;
     height: 2vh;
+    cursor: pointer;
 }
 
 .timerButtons {

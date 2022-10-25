@@ -37,6 +37,7 @@ button {
   min-width: fit-content;
   font-size: 2vh;
   width: 5vw;
+  cursor: pointer;
 }
 
 .centerVertically {

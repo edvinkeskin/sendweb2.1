@@ -42,21 +42,46 @@
 }
 
 .login-textInputtrue {
+    padding: 0.7vw;
     border-color: red;
     background-color: white;
     width: 20vw;
+    font-size: 2.5vh;
 }
 
 .loginButton {
+    width: 22vw;
+    height: 6vh;
+    font-size: 2.5vh;
+    background-color: #222222;
+    color: white;
+}
 
+.signUpButton {
+    width: 22vw;
+    height: 6vh;
+    font-size: 2.5vh;
+    background-color: white;
+    color: #222222;
 }
 
 .login-checkboxInput {
     width: 3vh;
     height: 3vh;
+    cursor: pointer;
 }
 
 .fPasswordButton {
     margin-top: 0.4vh;
     margin-left: auto;
+    color: black;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.loginText {
+    margin-top: 0.4vh;
+    font-size: 1.6vh;
 }

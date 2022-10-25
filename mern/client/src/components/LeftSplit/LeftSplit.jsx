@@ -47,7 +47,7 @@ export default function LeftSplit() {
         setKey(key)
 
         const newNote = {key: key, input: text, inputType: "string", password: password};
-        await fetch(`http://localhost:5000/record/add/${timer}`, {
+        await fetch(`http://localhost:5000/drops/add/${timer}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function LeftSplit() {
 
         const newNote = {key: key, input: file.base64, inputType: file.type, password: password};
 
-        await fetch(`http://localhost:5000/record/add/${timer}`, {
+        await fetch(`http://localhost:5000/drops/add/${timer}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

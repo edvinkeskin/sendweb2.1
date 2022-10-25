@@ -1,12 +1,45 @@
 import './Login.css';
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import Axios from "axios";
 
 export default function Login() {
-    const [errorText, setErrorText] = useState(false);
+    const [error, setError] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
+    // These methods will update the state properties.
+    function updateEmail(value) {
+        setEmail(value)
+    }
+
+    function updatePassword(value) {
+        setPassword(value)
+    }
+
+    function inputValidity() {
+
+    }
+
+    // login
+    // When a post request is sent to the login url, we'll check database.
     function login() {
+        inputValidity()
+        const url = `http://localhost:5000/users/${email}`;
+        Axios.get(url).then((response) => {
+            console.log(response.data)
+            if (response.data) {
+                if (response.data.password !== password) {
+                    setError(true)
+                    return
+                }
+                setError(false)
 
+            } else {
+                setError(true)
+            }
+
+        }).catch(err => console.log(err));
     }
 
     function passwordVisibility() {
@@ -16,10 +49,6 @@ export default function Login() {
         } else {
             passwordInput.type = "password";
         }
-    }
-
-    function fPasswordNav() {
-        this.props.history.push('/forgotpassword');
     }
 
     return (
@@ -42,30 +71,31 @@ export default function Login() {
             <div className="login-body">
                 <div className='login-body-header'>
                     <label style={{paddingBottom: '1vh'}}>Sign in</label>
-                    <label>Create Account — send data without access key.</label>
+                    <label>Send data without access key.</label>
                 </div>
                 <br/>
                 <div className='login-body-body'>
                     <label>Email</label>
-                    <input type="text" className={`login-textInput${errorText}`}
-                           onChange={(e) => updateText(e.target.value)}/>
+                    <input type="text" className={`login-textInput${error}`}
+                           onChange={(e) => updateEmail(e.target.value)}/>
                     <br/>
                     <label>Password</label>
-                    <input id='passwordInput' type="password" className={`login-textInput${errorText}`}
-                           onChange={(e) => updateText(e.target.value)}/>
+                    <input id='passwordInput' type="password" className={`login-textInput${error}`}
+                           onChange={(e) => updatePassword(e.target.value)}/>
                     <div className='passwordExtras'>
                         <input type="checkbox" className='login-checkboxInput' id="password"
                                onClick={passwordVisibility}/>
                         <div className='centerVertically'>
                             <label>Show Password</label>
                         </div>
-
-                        <label className='fPasswordButton' onClick={fPasswordNav}>Forgot password?</label>
-
+                        <Link className='fPasswordButton' to="/forgotpassword">
+                            <label className='cursorPointer'>Forgot password?</label>
+                        </Link>
                     </div>
+                    {error ? <text className='loginText'>Wrong email or password, please try again.</text> : ''}
 
                     <br/>
-                    <button className="loginButton" onClick={login}>Enter</button>
+                    <button className="loginButton" onClick={login}>Login</button>
                     <br/>
                     <Link to="/signup">
                         <button className="signUpButton">Sign Up</button>

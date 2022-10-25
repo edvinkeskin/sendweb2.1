@@ -11,7 +11,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 
 // This section will help you get a list of all the records.
-recordRoutes.route("/record").get(function (req, res) {
+recordRoutes.route("/drops").get(function (req, res) {
     let db_connect = dbo.getDb("db");
     db_connect
         .collection("drops")
@@ -23,7 +23,7 @@ recordRoutes.route("/record").get(function (req, res) {
 });
 
 // This section will help you get a single record by id
-recordRoutes.route("/record/:id").get(function (req, res) {
+recordRoutes.route("/drops/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect
@@ -35,7 +35,7 @@ recordRoutes.route("/record/:id").get(function (req, res) {
 });
 
 // This section will help you create a new record.
-recordRoutes.route("/record/add/:time").post(function (req, response) {
+recordRoutes.route("/drops/add/:time").post(function (req, response) {
     let db_connect = dbo.getDb();
     const date = Date.now()
     const time = req.params.time
@@ -95,6 +95,54 @@ recordRoutes.route("/delete/:key").delete((req, response) => {
         console.log("1 document deleted");
         response.json(obj);
     });
+});
+
+//routes for signup/login are below
+
+// This section will help you get a single record by id
+recordRoutes.route("/users/:id").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: req.params.id };
+    db_connect
+        .collection("users")
+        .findOne(myquery, function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
+// This section will help you create a new record.
+recordRoutes.route("/users/add/:email").post(function (req, response) {
+    let db_connect = dbo.getDb();
+    let myobj = {
+        _id: req.body.email,
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    };
+    db_connect.collection("users").insertOne(myobj, function (err, res) {
+        if (err) throw err;
+        response.json(res);
+    });
+});
+
+
+// This section will help you update a record by id.
+recordRoutes.route("/updateUser/:id").post(function (req, response) {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    let newvalues = {
+        $set: {
+            password: req.body.password,
+        },
+    };
+    db_connect
+        .collection("users")
+        .updateOne(myquery, newvalues, function (err, res) {
+            if (err) throw err;
+            console.log("1 document updated");
+            response.json(res);
+        });
 });
 
 module.exports = recordRoutes;
