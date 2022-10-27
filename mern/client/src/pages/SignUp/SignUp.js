@@ -1,5 +1,5 @@
 import './SignUp.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 
 export default function SignUp() {
@@ -9,6 +9,8 @@ export default function SignUp() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     // These methods will update the state properties.
     function updateName(value) {
@@ -24,7 +26,6 @@ export default function SignUp() {
     }
 
     function inputValidity() {
-        let error
         setErrorName(!name)
         setErrorPassword(!password)
 
@@ -32,8 +33,7 @@ export default function SignUp() {
         const emailValidity = regex.test(email.toLowerCase())
         setErrorEmail(!emailValidity)
 
-        error = !name || !password || !emailValidity
-        return error
+        return !name || !password || !emailValidity
     }
 
     // signup
@@ -50,10 +50,12 @@ export default function SignUp() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(newUser),
-        })
-            .catch(error => {
-                window.alert(error);
-            });
+        }).then(() => {
+            navigate("/", {state: {name: name}});
+        }).catch(error => {
+            window.alert(error);
+        });
+
     }
 
     function passwordVisibility() {

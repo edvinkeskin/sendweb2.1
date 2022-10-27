@@ -2,7 +2,7 @@ import './RightSplit.css'
 import {useState} from "react";
 import Axios from "axios";
 
-export default function RightSplit() {
+export default function RightSplit(props) {
     const [key, setKey] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState();
@@ -10,17 +10,18 @@ export default function RightSplit() {
     const [file, setFile] = useState();
     const [download, setDownload] = useState();
     const [message, setMessage] = useState("");
+    const [privateMessages, setPrivateMessages] = useState([]);
 
     // This method fetches the records from the database.
     async function read() {
         setMessage("")
         setDownload(null)
         setFile(null)
-        const url = `http://localhost:5000/record/`;
-        Axios.get(url).then((response)=>{
+        const url = `http://localhost:5000/drops/`;
+        Axios.get(url).then((response) => {
             for (let record of response.data) {
                 if (record.key === key) {
-                    if(record.password && record.password !== password) {
+                    if (record.password && record.password !== password) {
                         setError(true)
                         return
                     }
@@ -47,28 +48,85 @@ export default function RightSplit() {
                 }
 
             }
-        }).catch(err=>console.log(err));
+        }).catch(err => console.log(err));
+    }
+
+    // This method fetches the records from the database.
+    async function readPrivate() {
+        console.log(props.email)
+        if (!props.email) {
+            return
+        }
+        const url = `http://localhost:5000/drops/`;
+        Axios.get(url).then((response) => {
+            let privateMessages = []
+            for (let record of response.data) {
+                if (record.email === props.email) {
+                    privateMessages.push(record)
+                }
+            }
+            setPrivateMessages(privateMessages)
+            console.log(privateMessages)
+        }).catch(err => console.log(err));
+    }
+
+    function displayPrivateMessage(inputType, input) {
+        setError(false)
+        setDownload(null)
+        setImage(null)
+        setFile(null)
+        setMessage(null)
+        setMessage("")
+        setDownload(null)
+        setFile(null)
+
+        if (inputType === "string") {
+            setMessage(input)
+        } else if (inputType === "application/pdf") {
+            setFile(input)
+        } else if (inputType.startsWith("application")) {
+            setDownload(input)
+        } else if (inputType.startsWith("image")) {
+            setImage(input)
+        } else if (inputType === "text/html") {
+            setFile(input)
+        } else {
+            setDownload(input)
+        }
+    }
+
+    function PrivateMessageList() {
+
+        const listItems = privateMessages.map((number) =>
+            <button onClick={() => displayPrivateMessage(number.inputType, number.input)}>{number.inputType}</button>
+        );
+        return (
+            <ul>{listItems}</ul>
+        );
+
     }
 
     return (
         <div className="split">
             <div>
                 <label>Code: &nbsp;</label>
-                <input type="text" className='textInputfalse' onChange={(e) => setKey(e.target.value)} />
-                <button className="button" style={{marginLeft: '2vw'}} onClick={read} >Enter </button>
+                <input type="text" className='textInputfalse' onChange={(e) => setKey(e.target.value)}/>
+                <button className="button" style={{marginLeft: '2vw'}} onClick={read}>Enter</button>
+                <button className="button" onClick={readPrivate}>Check</button>
+                <PrivateMessageList/>
             </div>
             <br/>
             <div>
                 <label>Password: &nbsp;</label>
-                <input type="password" className='textInputfalse' onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" className='textInputfalse' onChange={(e) => setPassword(e.target.value)}/>
             </div>
 
             <h1>{message}</h1>
             {image ? <img src={image} className='image' alt="receivedImage"/> : ""}
-            {file ? <embed className='file' src={file} /> : ""}
+            {file ? <embed className='file' src={file}/> : ""}
             {download ? <a download="pdfTitle" href={download} title='Download pdf document'>
                 <h2>Download File</h2>
-                </a>: ""}
+            </a> : ""}
 
             {error ? <h2>Invalid key or password</h2> : ""}
 

@@ -2,7 +2,7 @@ import './LeftSplit.css'
 import {useState} from "react";
 import FileBase64 from 'react-file-base64';
 
-export default function LeftSplit() {
+export default function LeftSplit(props) {
     const [key, setKey] = useState("");
     const [text, setText] = useState();
     const [file, setFile] = useState();
@@ -11,6 +11,7 @@ export default function LeftSplit() {
     const [errorPassword, setErrorPassword] = useState(false)
     const [errorFile, setErrorFile] = useState(false);
     const [passwordCheckbox, setPasswordCheckbox] = useState(false)
+    const [privateCheckbox, setPrivateCheckbox] = useState(false)
     const [password, setPassword] = useState()
 
     function getFiles(files) {
@@ -36,17 +37,20 @@ export default function LeftSplit() {
         setKey("")
         if (!text) {
             return
-        }
-
-        if (passwordCheckbox && !password) {
+        } else if (passwordCheckbox && !password) {
             setErrorPassword(true)
             return
         }
 
-        const key = (112 + Math.floor(Math.random() * 999887)).toString()
-        setKey(key)
+        let newNote
+        if(privateCheckbox) {
+            newNote = {key: null, input: text, inputType: "string", password: password, email: props.email};
+        } else {
+            const key = (112 + Math.floor(Math.random() * 999887)).toString()
+            setKey(key)
+            newNote = {key: key, input: text, inputType: "string", password: password, email: null};
+        }
 
-        const newNote = {key: key, input: text, inputType: "string", password: password};
         await fetch(`http://localhost:5000/drops/add/${timer}`, {
             method: "POST",
             headers: {
@@ -68,17 +72,19 @@ export default function LeftSplit() {
         setKey("")
         if (!file) {
             return
-        }
-        if (passwordCheckbox && !password) {
+        } else if (passwordCheckbox && !password) {
             setErrorPassword(true)
             return
         }
 
-        const key = (112 + Math.floor(Math.random() * 999887)).toString()
-        setKey(key)
-        setErrorPassword(false)
-
-        const newNote = {key: key, input: file.base64, inputType: file.type, password: password};
+        let newNote
+        if(privateCheckbox) {
+            newNote = {key: null, input: file.base64, inputType: file.type, password: password, email: props.email};
+        } else {
+            const key = (112 + Math.floor(Math.random() * 999887)).toString()
+            setKey(key)
+            newNote = {key: key, input: file.base64, inputType: file.type, password: password, email: null};
+        }
 
         await fetch(`http://localhost:5000/drops/add/${timer}`, {
             method: "POST",
@@ -108,18 +114,28 @@ export default function LeftSplit() {
             </div>
             {errorFile ? <text>File not inserted</text> : ""}
             <br/>
+
             <div className='leftSplitDiv'>
                 <label>Add Password: &nbsp;</label>
-                <input type="checkbox" className='checkboxInput' id="password" onChange={() => {
+                <input type="checkbox" className='checkboxInput' id="password" disabled={privateCheckbox} onChange={() => {
                     setPasswordCheckbox(document.getElementById("password").checked)
                     setPassword(null)
                     setErrorPassword(false)
                 }}/>
             </div>
+            <br/>
+            {props.name ?
+                <div className='leftSplitDiv'>
+                    <label>Send private to account: &nbsp;</label>
+                    <input type="checkbox" className='checkboxInput' id="private" onChange={() => {
+                        setPrivateCheckbox(document.getElementById("private").checked)
+                    }}/>
+                </div> : ''}
             <div>
                 {passwordCheckbox ? <br/> : ""}
-                {passwordCheckbox ? <label>Password:  </label> : ""}
-                {passwordCheckbox ? <input type="text" className='textInputfalse' onChange={(e) => updatePassword(e.target.value)}/> : ""}
+                {passwordCheckbox ? <label>Password: </label> : ""}
+                {passwordCheckbox ? <input type="text" className='textInputfalse'
+                                           onChange={(e) => updatePassword(e.target.value)}/> : ""}
                 {errorPassword ? <br/> : ""}
                 {errorPassword ? <text>Password not set</text> : ""}
             </div>

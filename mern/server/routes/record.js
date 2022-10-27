@@ -44,6 +44,7 @@ recordRoutes.route("/drops/add/:time").post(function (req, response) {
         input: req.body.input,
         inputType: req.body.inputType,
         password: req.body.password,
+        email: req.body.email,
         ["createdOn" + time]: new Date(date)
     };
     db_connect.collection("drops").insertOne(myobj, function (err, res) {

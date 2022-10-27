@@ -1,12 +1,18 @@
 import './Login.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Axios from "axios";
 
 export default function Login() {
     const [error, setError] = useState(false);
+    const [errorEmail, setErrorEmail] = useState(false);
+    const [errorEmailBorder, setErrorEmailBorder] = useState(false);
+    const [errorPasswordBorder, setErrorPasswordBorder] = useState(false);
+    const [errorPassword, setErrorPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     // These methods will update the state properties.
     function updateEmail(value) {
@@ -17,26 +23,43 @@ export default function Login() {
         setPassword(value)
     }
 
-    function inputValidity() {
+    function setErrors(b) {
+        setError(b)
+        setErrorEmailBorder(b)
+        setErrorPasswordBorder(b)
+    }
 
+    function inputValidity() {
+        setError(false)
+        let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+        const emailValidity = regex.test(email.toLowerCase());
+        setErrorEmail(!emailValidity);
+        setErrorEmailBorder(!emailValidity);
+        setErrorPassword(!password);
+        setErrorPasswordBorder(!password);
+
+        return !email || !password;
     }
 
     // login
+
     // When a post request is sent to the login url, we'll check database.
-    function login() {
-        inputValidity()
+    function useLogin() {
+        if (inputValidity()) {
+            return;
+        }
         const url = `http://localhost:5000/users/${email}`;
         Axios.get(url).then((response) => {
             console.log(response.data)
             if (response.data) {
                 if (response.data.password !== password) {
-                    setError(true)
-                    return
+                    setErrors(true)
+                    return;
                 }
-                setError(false)
-
+                setErrors(false);
+                navigate("/", {state:{name:response.data.name, email:response.data.email}});
             } else {
-                setError(true)
+                setErrors(true);
             }
 
         }).catch(err => console.log(err));
@@ -76,11 +99,13 @@ export default function Login() {
                 <br/>
                 <div className='login-body-body'>
                     <label>Email</label>
-                    <input type="text" className={`login-textInput${error}`}
+                    <input type="text" className={`login-textInput${errorEmailBorder}`}
                            onChange={(e) => updateEmail(e.target.value)}/>
+                    {errorEmail ? <text className='loginText'>You have to enter a valid email address.</text> : ''}
+
                     <br/>
                     <label>Password</label>
-                    <input id='passwordInput' type="password" className={`login-textInput${error}`}
+                    <input id='passwordInput' type="password" className={`login-textInput${errorPasswordBorder}`}
                            onChange={(e) => updatePassword(e.target.value)}/>
                     <div className='passwordExtras'>
                         <input type="checkbox" className='login-checkboxInput' id="password"
@@ -93,9 +118,10 @@ export default function Login() {
                         </Link>
                     </div>
                     {error ? <text className='loginText'>Wrong email or password, please try again.</text> : ''}
+                    {errorPassword ? <text className='loginText'>You have to enter a valid password.</text> : ''}
 
                     <br/>
-                    <button className="loginButton" onClick={login}>Login</button>
+                    <button className="loginButton" onClick={useLogin}>Login</button>
                     <br/>
                     <Link to="/signup">
                         <button className="signUpButton">Sign Up</button>

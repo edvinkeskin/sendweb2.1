@@ -9,3 +9,7 @@
     height: 80vh;
     width: 50vw;
 }
+
+ul {
+    list-style-type: none;
+}

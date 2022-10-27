@@ -1,7 +1,13 @@
 import './Header.css'
-import {Outlet, Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
-export default function Header() {
+export default function Header(props) {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    function logout() {
+        navigate("/", {state:{name:null}});
+    }
 
     return (
         <div className="Header">
@@ -12,14 +18,18 @@ export default function Header() {
             </div>
 
             <div className="ButtonSet">
+                <label className='centerVertically'>{props.name}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                {props.name ? <button className="HeaderButton" onClick={logout}>Logout</button> : ''}
+
                 <Link to="/signup">
-                    <button className="HeaderButton">Sign Up</button>
+                    {props.name ? '' : <button className="HeaderButton">Sign Up</button>}
                 </Link>
 
                 <Link to="/login">
-                    <button className="HeaderButton">Login</button>
+                    {props.name ? '' : <button className="HeaderButton">Login</button>}
+
                 </Link>
-                <Outlet/>
 
             </div>
 
