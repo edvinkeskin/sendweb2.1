@@ -6,10 +6,35 @@
 }
 
 .file {
-    height: 80vh;
+    margin-top: -3vh;
+    height: 72vh;
     width: 50vw;
 }
 
-ul {
+.splitTop {
+    display: flex;
+    flex-direction: row;
+}
+
+.splitTopOne {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.splitTopTwo {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.splitTopList {
     list-style-type: none;
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.listButton {
+    width: 10vw;
 }

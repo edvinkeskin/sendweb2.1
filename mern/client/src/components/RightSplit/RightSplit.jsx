@@ -98,37 +98,44 @@ export default function RightSplit(props) {
     function PrivateMessageList() {
 
         const listItems = privateMessages.map((number) =>
-            <button onClick={() => displayPrivateMessage(number.inputType, number.input)}>{number.inputType}</button>
+            <button className='listButton' onClick={() => displayPrivateMessage(number.inputType, number.input)}>{number.inputType}</button>
         );
         return (
-            <ul>{listItems}</ul>
+            <ul className='splitTopList'>{listItems}</ul>
         );
 
     }
 
     return (
         <div className="split">
-            <div>
-                <label>Code: &nbsp;</label>
-                <input type="text" className='textInputfalse' onChange={(e) => setKey(e.target.value)}/>
-                <button className="button" style={{marginLeft: '2vw'}} onClick={read}>Enter</button>
-                <button className="button" onClick={readPrivate}>Check</button>
-                <PrivateMessageList/>
-            </div>
-            <br/>
-            <div>
-                <label>Password: &nbsp;</label>
-                <input type="password" className='textInputfalse' onChange={(e) => setPassword(e.target.value)}/>
-            </div>
+            <div className="splitTop">
+                <div className='splitTopOne'>
+                    <div>
+                        <label>Code: &nbsp;</label>
+                        <input type="text" className='textInputfalse' onChange={(e) => setKey(e.target.value)}/>
+                        <button className="button" style={{marginLeft: '4vw'}} onClick={read}>Enter</button>
 
-            <h1>{message}</h1>
-            {image ? <img src={image} className='image' alt="receivedImage"/> : ""}
-            {file ? <embed className='file' src={file}/> : ""}
-            {download ? <a download="pdfTitle" href={download} title='Download pdf document'>
-                <h2>Download File</h2>
-            </a> : ""}
-
-            {error ? <h2>Invalid key or password</h2> : ""}
+                    </div>
+                    <br/>
+                    <div>
+                        <label>Password: &nbsp;</label>
+                        <input type="password" className='textInputfalse' onChange={(e) => setPassword(e.target.value)}/>
+                    </div>
+                </div>
+                <div className='splitTopTwo'>
+                    <button className="button" onClick={readPrivate}>Check</button>
+                    <PrivateMessageList/>
+                </div>
+            </div>
+            <div className='splitBottom'>
+                <h1>{message}</h1>
+                {image ? <img src={image} className='image' alt="receivedImage"/> : ""}
+                {file ? <embed className='file' src={file}/> : ""}
+                {download ? <a download="pdfTitle" href={download} title='Download pdf document'>
+                    <h2>Download File</h2>
+                </a> : ""}
+                {error ? <h2>Invalid key or password</h2> : ""}
+            </div>
 
         </div>
     );

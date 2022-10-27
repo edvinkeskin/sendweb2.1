@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
 .App-header {
@@ -13,7 +14,7 @@
 }
 
 
-.split {
+.split{
   padding-top: 5vh;
   padding-left: 2vw;
   height: 88vh;
