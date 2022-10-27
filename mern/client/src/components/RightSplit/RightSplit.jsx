@@ -122,10 +122,11 @@ export default function RightSplit(props) {
                         <input type="password" className='textInputfalse' onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                 </div>
+                {props.email ?
                 <div className='splitTopTwo'>
                     <button className="button" onClick={readPrivate}>Check</button>
                     <PrivateMessageList/>
-                </div>
+                </div> : ''}
             </div>
             <div className='splitBottom'>
                 <h1>{message}</h1>
