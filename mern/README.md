@@ -1,4 +1,4 @@
-##Welcome to Acuter Sender 2.0
+## Welcome to Acuter Sender 2.0
 
 The original idea aimed to provide a fast and modern solution to sending data between your devices without having to email yourself.
 Using the mobile app you could send data that can be accessed on a website. As so, you could send data between your phone and PC.
@@ -17,11 +17,11 @@ Acute Sender 2.0 includes only the website but provides many features compared t
 
 - Sending data with an expiration time span or password
 
-###Installation:
+### Installation:
 
 Go to both package.json files for client and server folders and install dependencies.
 
-###Setup:
+### Setup:
 
 Using terminal,
 go to server folder run 'node server.js' to run server to connect to mongodb
